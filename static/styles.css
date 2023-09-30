@@ -1,5 +1,4 @@
-/* styles.css */
-
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
 /* Apply styles to the container */
 html, body {
     height: 100%;
@@ -9,31 +8,36 @@ html, body {
     align-items: center;
 }
 /* Set a background image and create a moving animation */
-body {
-    background-image: url('https://images.unsplash.com/photo-1446034295857-c39f8844fad4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'); /* Replace with the path to your image */
-    background-size: cover;
-    background-attachment: fixed; /* Keeps the background image fixed while the content scrolls */
-    animation: slide 30s linear infinite; /* Customize the duration (30s) and animation name ('slide') */
+body{
+	font-family: arial;
+	font-size: 20;
+	color: white;
+   background-image: url('https://images.unsplash.com/photo-1446034295857-c39f8844fad4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+   background-size: 80%; /* Zoom out the background image by 20% */
+        -webkit-animation: slidein 100s;
+        animation: slidein 100s;
+
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+
+        -webkit-animation-direction: alternate;
+        animation-direction: alternate;
+   background-repeat: repeat;
+   text-align: center;
 }
-/* Define the animation keyframes */
-@keyframes slide {
-    0% {
-        background-position: 100% 0%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
-}
-/* Define the animation keyframes */
-@keyframes slide {
-    0% {
-        background-position: 100% 0%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
+@-webkit-keyframes slidein {
+from {background-position: top; background-size:1700px; }
+to {background-position: -100px 0px;background-size:3000px;}
 }
 
+@keyframes slidein {
+from {background-position: top;background-size:1990px; }
+to {background-position: -100px 0px;background-size:3000px;}
+
+}
 .container {
     max-width: 400px;
     margin: 0 auto;
@@ -97,4 +101,12 @@ img {
     margin-top: 10px;
     max-width: 100px;
     height: auto;
+}
+
+.cloud-icon {
+    width: 90px; /* Set the desired width for the icon */
+    height: auto; /* Maintain the aspect ratio */
+    margin-right: 10px; /* Adjust the margin to control its position */
+    vertical-align: middle; /* Align the icon vertically with the text */
+    border-radius: 50%; /* Make the edges round (50% radius) */
 }
