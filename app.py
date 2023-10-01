@@ -1,10 +1,9 @@
-import os
-from flask import Flask, render_template, request
+import json
+from flask import Flask, render_template, request, jsonify
 import requests
 
 app = Flask(__name__)
 
-# Replace 'YOUR_API_KEY' with your actual Weatherstack API key
 API_KEY = '0c20320445392a19d9b2a02ae290502c'
 BASE_URL = 'http://api.weatherstack.com/current'
 
@@ -14,75 +13,53 @@ def get_weather(city):
         'query': city,
     }
 
-    response = requests.get(BASE_URL, params=params)
-
-    if response.status_code == 200:
+    try:
+        response = requests.get(BASE_URL, params=params)
+        response.raise_for_status()  # Raise an exception for 4xx and 5xx HTTP status codes
         data = response.json()
-        temperature = data['current']['temperature']
+
+        temperature_celsius = data['current']['temperature']
+        temperature_fahrenheit = (temperature_celsius * 9/5) + 32
+        temperature_kelvin = temperature_celsius + 273.15
         description = data['current']['weather_descriptions'][0]
+        country = data['location']['country']
+
         return {
             'city': city,
-            'temperature': temperature,
+            'country': country,
+            'temperature': temperature_celsius,
+            'fahrenheit': temperature_fahrenheit,
+            'kelvin': temperature_kelvin,
             'description': description,
-            'weather_image': get_weather_image(description.lower())
         }
-    else:
-        return None
-
-# Define temperature ranges and corresponding image filenames
-temperature_images = {
-    'cold': 'cold.png',           # Temperature less than 10°C
-    'mild': 'mild.png',           # Temperature between 10°C and 20°C
-    'warm': 'warm.png',           # Temperature between 20°C and 30°C
-    'hot': 'hot.png',             # Temperature greater than or equal to 30°C
-    'default': 'default.png',     # Default image for unknown temperature ranges
-}
-
-def get_weather_image(temperature):
-    # Determine the temperature range and select the corresponding image
-    if temperature < 10:
-        return temperature_images['cold']
-    elif 10 <= temperature < 20:
-        return temperature_images['mild']
-    elif 20 <= temperature < 30:
-        return temperature_images['warm']
-    elif temperature >= 30:
-        return temperature_images['hot']
-    else:
-        return temperature_images['default']
-
-# Modify the get_weather function to get the temperature
-def get_weather(city):
-    params = {
-        'access_key': API_KEY,
-        'query': city,
-    }
-
-    response = requests.get(BASE_URL, params=params)
-
-    if response.status_code == 200:
-        data = response.json()
-        temperature = data['current']['temperature']
-        description = data['current']['weather_descriptions'][0]
+    except requests.exceptions.RequestException as e:
+        status_code = e.response.status_code if e.response is not None else None
+        error_message = 'Network error. Please check your internet connection and try again.'
         return {
-            'city': city,
-            'temperature': temperature,
-            'description': description,
-            'weather_image': get_weather_image(temperature)  # Use temperature to get the image
+            'error': f'Error {status_code}: {error_message}',
         }
-    else:
-        return None
+    except (KeyError, ValueError) as e:
+        status_code = 400  # Default to a status code of 400 (Bad Request)
+        error_message = 'Invalid data received from the server.'
+        return {
+            'error': f'Error {status_code}: {error_message}',
+        }
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    error_message = None
+
     if request.method == 'POST':
         city = request.form.get('city')
         weather_data = get_weather(city)
-        if weather_data:
-            return render_template('index.html', **weather_data)
+        
+        if 'error' in weather_data:
+            error_message = weather_data['error']
         else:
-            return "Unable to fetch weather data for the provided city."
-    return render_template('index.html', city='', temperature='', description='', weather_image='default.png')
+            return render_template('index.html', **weather_data)
+    
+    return render_template('index.html', city='', country='', temperature='', description='', error=error_message)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
+    # app.run(debug=True)

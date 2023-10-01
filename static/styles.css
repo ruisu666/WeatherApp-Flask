@@ -1,32 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
-/* Apply styles to the container */
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 /* Set a background image and create a moving animation */
-body{
-	font-family: arial;
-	font-size: 20;
-	color: white;
-   background-image: url('https://images.unsplash.com/photo-1446034295857-c39f8844fad4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-   background-size: 80%; /* Zoom out the background image by 20% */
-        -webkit-animation: slidein 100s;
-        animation: slidein 100s;
-
-        -webkit-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-
-        -webkit-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-
-        -webkit-animation-direction: alternate;
-        animation-direction: alternate;
-   background-repeat: repeat;
-   text-align: center;
+body {
+    font-family: Arial;
+    font-size: 20px; /* Add 'px' for units */
+    color: white;
+    background-color: #333; /* Fallback background color */
+    background-image: url('https://images.unsplash.com/photo-1446034295857-c39f8844fad4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-size: 80%; /* Zoom out the background image by 20% */
+    -webkit-animation: slidein 100s;
+    animation: slidein 100s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+    background-repeat: repeat;
+    text-align: center;
 }
 @-webkit-keyframes slidein {
 from {background-position: top; background-size:1700px; }
@@ -38,75 +28,52 @@ from {background-position: top;background-size:1990px; }
 to {background-position: -100px 0px;background-size:3000px;}
 
 }
+.cloud-icon {
+    border-radius: 50%;
+    width: 90px;
+    height: auto;
+    margin-left: 20px;
+    margin-top: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .container {
-    max-width: 400px;
+    font-weight: bold;
+    width: 40%;
     margin: 0 auto;
-    text-align: center;
+    margin-left: 0;
+    margin-top: 150px;
+    text-align: left;
     padding: 20px;
     background-color: #f4f4f4;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Style the title */
-h1 {
-    color: #333;
-}
-
-/* Style the form */
-form {
-    margin-top: 50px;
-}
-
-/* Style the input field and submit button */
-label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #555;
-}
-
-input[type="text"] {
-    width: 70%; /* Set the desired width, e.g., 70% of the container */
+input[id="city"] {
+    width: 20%; /* Set the desired width, e.g., 70% of the container */
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
+    margin-left: 120px;
+    margin-top: 35px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
-
-
-button[type="submit"] {
-    background-color: #007BFF;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
 /* Style the weather information */
 h2 {
     margin-top: 20px;
-    font-size: 24px;
+    font-size: 20px;
     color: #333;
 }
-
 p {
-    font-size: 18px;
+    font-size: 20px;
     color: #555;
 }
 
-/* Style the weather image */
-img {
-    margin-top: 10px;
-    max-width: 100px;
-    height: auto;
-}
 
-.cloud-icon {
-    width: 90px; /* Set the desired width for the icon */
-    height: auto; /* Maintain the aspect ratio */
-    margin-right: 10px; /* Adjust the margin to control its position */
-    vertical-align: middle; /* Align the icon vertically with the text */
-    border-radius: 50%; /* Make the edges round (50% radius) */
-}
+
+

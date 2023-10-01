@@ -2,23 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Weather App</title>
+    <title>Weather</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <form method="POST" action="/">
+        <div class="navbar">
+            <img src="https://i.pinimg.com/originals/06/c4/f7/06c4f70ec5931e2342e703e8a3f0a253.png" alt="Cloud Icon" class="cloud-icon">
+            <input type="text" id="city" name="city" placeholder="Enter city here..." required autocomplete="off">
+        </div>
+    </form>
     <div class="container">
-        <img src="https://i.pinimg.com/originals/06/c4/f7/06c4f70ec5931e2342e703e8a3f0a253.png" alt="Cloud Icon" class="cloud-icon">
-        <h1>Weather</h1>
-        <form method="POST" action="/">
-            <label for="city">Enter a city:</label>
-            <input type="text" id="city" name="city" required>
-            <button type="submit">Fetch Weather</button>
-        </form>
-        {% if city %}
-            <h2>Weather in {{ city }}</h2>
-            <p>{{ description }}, Temperature: {{ temperature }}°C</p>
-            <img src="{{ url_for('static', filename='weather_images/' + weather_image) }}" alt="Weather Icon">
-        {% endif %}
+        <p>City: {{ city|upper }}</p>
+        <p>Country: {{ country|upper }}</p>
+        <p>Description: {{ description|upper }}</p>
+        <p>Temperature: </p>
+        <p>Celsius: {{ temperature }}°C</p>
+        <p>Fahrenheit: {{ fahrenheit }}°F</p>
+        <p>Kelvin: {{ kelvin }}°K</p>
     </div>
+
+    <!-- resets form when i refresh -->
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+    <!-- error handling -->
+    {% if error %}
+    <script>
+        alert("{{ error }}");
+    </script>
+    {% endif %}
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+
 </body>
 </html>
