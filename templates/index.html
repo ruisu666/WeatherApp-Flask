@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Weather</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two columns */
+            gap: 20px; /* Gap between paragraphs */
+        }
+        
+        p {
+            /* border: 1px solid #ccc; Add a border for visibility */
+            padding: 10px; /* Add padding for spacing within each paragraph */
+            margin: 0; /* Remove default margin to prevent extra spacing */
+        }
+    </style>
 </head>
 <body>
     <form method="POST" action="/">
@@ -13,16 +27,30 @@
         </div>
     </form>
     <div class="container">
-        <p>City: {{ city|upper }}</p>
-        <p>Country: {{ country|upper }}</p>
-        <p>Description: {{ description|upper }}</p>
-        <p>Temperature: </p>
-        <p>Celsius: {{ temperature }}°C</p>
-        <p>Fahrenheit: {{ fahrenheit }}°F</p>
-        <p>Kelvin: {{ kelvin }}°K</p>
+        <div class="grid-container">
+            <p>Current Weather Conditions:</p>
+            <p></p>
+            <p>City: {{ city|upper }}</p>
+            <p>Longitude : {{ longitude|upper }}</p>
+            <p>Country: {{ country|upper }}</p>
+            <p>Latitude : {{ latitude|upper }}</p>
+            <p>Description: {{ description|upper }}</p>
+            <p>Humidity: {{ humidity }}%</p>
+            <p>Temperature: </p>
+            <p></p>
+            <p>Celsius: {{ temperature }}°C</p>
+            <p>Fahrenheit: {{ fahrenheit }}°F</p>
+            <p>Kelvin: {{ kelvin }}°K</p>
+            <p></p>
+            <p>Visibility: {{ visibility }} km</p>
+            <p>Wind Speed: {{ wind_speed }} km/h</p>
+            <p>Wind Direction: {{ wind_direction }}</p>
+            <p>Atmospheric Pressure: {{ atmospheric_pressure }} mb</p>
+            <p>Time Zone: {{ time_zone }}</p>            
+        </div>
     </div>
 
-    <!-- resets form when i refresh -->
+    <!-- refresh -->
     <script>
         if ( window.history.replaceState ) {
             window.history.replaceState( null, null, window.location.href );
@@ -31,7 +59,7 @@
     <!-- error handling -->
     {% if error %}
     <script>
-        alert("{{ error }}");
+        alert("Error: {{ error }}");
     </script>
     {% endif %}
     <script>

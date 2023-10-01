@@ -15,7 +15,7 @@ def get_weather(city):
 
     try:
         response = requests.get(BASE_URL, params=params)
-        response.raise_for_status()  # Raise an exception for 4xx and 5xx HTTP status codes
+        response.raise_for_status()
         data = response.json()
 
         temperature_celsius = data['current']['temperature']
@@ -23,6 +23,16 @@ def get_weather(city):
         temperature_kelvin = temperature_celsius + 273.15
         description = data['current']['weather_descriptions'][0]
         country = data['location']['country']
+        longitude = data['location']['lon']
+        latitude = data['location']['lat']
+        humidity = data['current']['humidity']
+        
+        # Additional data
+        visibility = data['current']['visibility']
+        wind_speed = data['current']['wind_speed']
+        wind_direction = data['current']['wind_dir']
+        atmospheric_pressure = data['current']['pressure']
+        time_zone = data['location']['utc_offset']
 
         return {
             'city': city,
@@ -31,6 +41,14 @@ def get_weather(city):
             'fahrenheit': temperature_fahrenheit,
             'kelvin': temperature_kelvin,
             'description': description,
+            'longitude': longitude,
+            'latitude': latitude,
+            'humidity': humidity,
+            'visibility': visibility,
+            'wind_speed': wind_speed,
+            'wind_direction': wind_direction,
+            'atmospheric_pressure': atmospheric_pressure,
+            'time_zone': time_zone,
         }
     except requests.exceptions.RequestException as e:
         status_code = e.response.status_code if e.response is not None else None
@@ -39,11 +57,12 @@ def get_weather(city):
             'error': f'Error {status_code}: {error_message}',
         }
     except (KeyError, ValueError) as e:
-        status_code = 400  # Default to a status code of 400 (Bad Request)
+        status_code = 400
         error_message = 'Invalid data received from the server.'
         return {
             'error': f'Error {status_code}: {error_message}',
         }
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
