@@ -1,4 +1,4 @@
-# WeatherApp-with-Python-Flask
+# WeatherApp-Flask
 
 Things I added:
 City, Country Data Fetch
