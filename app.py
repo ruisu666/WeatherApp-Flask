@@ -63,7 +63,6 @@ def get_weather(city):
             'error': f'Error {status_code}: {error_message}',
         }
 
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     error_message = None
@@ -80,5 +79,5 @@ def index():
     return render_template('index.html', city='', country='', temperature='', description='', error=error_message)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
     # app.run(debug=True)
